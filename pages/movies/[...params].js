@@ -1,27 +1,21 @@
 import { useRouter } from 'next/router';
-// import { useEffect, useState } from 'react';
+import Seo from '../../components/Seo';
 
-export default function Detail() {
+export default function Detail({params}) {
   const router = useRouter();
-  // console.log(router);
-  // const [movie, setMovie] = useState();
-  // useEffect(() => {
-  //   (
-  //     async () => {
-  //       const res = await (await fetch(`/api/movies/${router.query.id}`)).json();
-  //       setMovie(res);
-  //     }
-  //   )();
-  // }, []);
+  const [title, id] = params || [];
   return (
     <div>
-      <h4>{router.query.title || 'loading...'}</h4>
-      {/* {!movie && <div>loading...</div>}
-      {movie && (
-        <div>
-          {movie.original_title}
-        </div>
-      )} */}
+      <Seo title={title} />
+      <h4>{title}</h4>
     </div>
   );
+}
+
+export function getServerSideProps({params: {params}}) {
+  return {
+    props: {
+      params,
+    },
+  };
 }
